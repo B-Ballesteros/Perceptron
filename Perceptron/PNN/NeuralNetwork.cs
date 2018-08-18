@@ -19,8 +19,17 @@ namespace bballesteros.PNN
 
         private void AdjustWeights() { }
 
-        private void Activate()
+        private void Activate(Pattern pattern)
         {
+            if(pattern.Inputs.Length != Inputs.Count)
+            {
+                throw new ArgumentException(
+                    "Configuration mismatch.\n The number of pattern inputs must be equal to the number of the input neurons in the network");
+            }
+            for(var i = 0; i < Inputs.Count; i++)
+            {
+                Inputs[i].Output = pattern.Inputs[i];
+            }
             foreach(var layer in this)
             {
                 foreach(var neuron in layer)

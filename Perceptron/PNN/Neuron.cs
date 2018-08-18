@@ -20,7 +20,7 @@ namespace bballesteros.PNN
                 {
                     return SigmodiFunction();
                 }
-                    }
+            }
             set { output = value; }
         }
         public double Delta { get; set; }

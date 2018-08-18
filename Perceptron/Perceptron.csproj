@@ -55,6 +55,7 @@
     <Compile Include="PNN\NeuralLayer.cs" />
     <Compile Include="PNN\NeuralNetwork.cs" />
     <Compile Include="PNN\Neuron.cs" />
+    <Compile Include="Pattern.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PNN\Weight.cs" />
