@@ -28,6 +28,7 @@ namespace bballesteros.PNN
         public double Error { get; set; }
         public double Input { get; set; }
         public double Gradient { get; set; }
+        public double LearningRatio = 0.01;
         public List<Weight> Weights { get; set; }
 
         public Neuron() { }
@@ -45,16 +46,37 @@ namespace bballesteros.PNN
             }
         }
 
-        public void AccumulateError()
-        { }
+        public void AccumulateError(double delta)
+        {
+            Error += delta;
+            if (Weights != null) {
+                foreach (var weight in Weights) //Propagates the error to the inner layers
+                {
+                    weight.LinkedNeuron.AccumulateError(Error * weight.Value);
+                }
+            }
+        }
 
         public void AdjustWeights()
-        { }
+        {
+            var partialDerivative = CalculatePartialDerivative();
+            foreach (var weight in Weights)
+            {
+                weight.Value += LearningRatio * partialDerivative * weight.LinkedNeuron.Output;
+            }
+            Bias += partialDerivative * LearningRatio;
+        }
 
 
         private double SigmodiFunction()
         {
             return 1 / (1 + Exp(-Gradient * (Input + Bias)));
+        }
+
+        private double CalculatePartialDerivative()
+        {
+            var outputValue = Output;
+            return  Error * (outputValue * (1 - outputValue));
         }
     }
 }

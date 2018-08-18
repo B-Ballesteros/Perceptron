@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Math;
 
 namespace bballesteros.PNN
 {
@@ -17,7 +18,16 @@ namespace bballesteros.PNN
 
         public void Train() { }
 
-        private void AdjustWeights() { }
+        private void AdjustWeights()
+        {
+            for(var i = base.Count -1; i > 0; i--) //Backward Propagation
+            {
+                foreach(var neuron in base[i])
+                {
+                    neuron.AdjustWeights();
+                }
+            }
+        }
 
         private void Activate(Pattern pattern)
         {
@@ -37,6 +47,26 @@ namespace bballesteros.PNN
                     neuron.Activate();
                 }
             }
+        }
+
+        public void Train(List<Pattern> patterns)
+        {
+            double totalError = 0;
+            do
+            {
+                totalError = 0;
+                foreach(var pattern in patterns)
+                {
+                    Activate(pattern); //Forward Propagation
+                    for (var i = 0; i < Outputs.Count; i++)
+                    {
+                        var delta = -(pattern.Outputs[i] - Outputs[i].Output);
+                        Outputs[i].AccumulateError(delta);
+                        totalError += 0.5 * Pow(delta, 2);
+                    }
+                    AdjustWeights();
+                }
+            } while (totalError > 0.01);
         }
 
     }
