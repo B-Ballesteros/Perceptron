@@ -10,6 +10,6 @@ namespace bballesteros.PNN
     {
         public double Value { get; set; } = new Random().NextDouble() * 2 - 1; 
 
-        public Neuron Input { get; set; }
+        public Neuron LinkedNeuron { get; set; }
     }
 }

@@ -19,7 +19,16 @@ namespace bballesteros.PNN
 
         private void AdjustWeights() { }
 
-        private void Activate() { }
+        private void Activate()
+        {
+            foreach(var layer in this)
+            {
+                foreach(var neuron in layer)
+                {
+                    neuron.Activate();
+                }
+            }
+        }
 
     }
 }
