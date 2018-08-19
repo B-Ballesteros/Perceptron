@@ -24,7 +24,7 @@ namespace bballesteros.PNN
             set { output = value; }
         }
         public double Delta { get; set; }
-        public double Bias { get; set; }
+        public double Bias { get; set; } = 1;
         public double Error { get; set; }
         public double Input { get; set; }
         public double Steepness { get; set; } = 1;
