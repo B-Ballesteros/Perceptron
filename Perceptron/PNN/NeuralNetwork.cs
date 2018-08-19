@@ -9,20 +9,27 @@ namespace bballesteros.PNN
 {
     class NeuralNetwork: List<NeuralLayer>
     {
-        public NeuralLayer Inputs { get { return base[0]; } }
-        public NeuralLayer Outputs { get { return base[base.Count - 1]; } }
+        public NeuralLayer Inputs { get { return this[0]; } }
+        public NeuralLayer Outputs { get { return this[Count - 1]; } }
 
         public NeuralNetwork() { }
-        public NeuralNetwork(int[] structure) { }
+        public NeuralNetwork(int[] structure)
+        {
+            Add(new NeuralLayer(structure[0]));
+            for(var i = 1; i < structure.Length; i++)
+            {
+                Add(new NeuralLayer(structure[i], this[i - 1]));
+            }
+        }
 
 
         public void Train() { }
 
         private void AdjustWeights()
         {
-            for(var i = base.Count -1; i > 0; i--) //Backward Propagation
+            for(var i = Count -1; i > 0; i--) //Backward Propagation
             {
-                foreach(var neuron in base[i])
+                foreach(var neuron in this[i])
                 {
                     neuron.AdjustWeights();
                 }

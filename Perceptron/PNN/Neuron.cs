@@ -27,14 +27,21 @@ namespace bballesteros.PNN
         public double Bias { get; set; }
         public double Error { get; set; }
         public double Input { get; set; }
-        public double Gradient { get; set; }
+        public double Steepness { get; set; } = 1;
         public double LearningRatio = 0.01;
         public List<Weight> Weights { get; set; }
 
         public Neuron() { }
 
         public Neuron(NeuralLayer inputLayer)
-        { }
+        {
+            Weights = new List<Weight>();
+            foreach(var neuron in inputLayer)
+            {
+                var weight = new Weight { LinkedNeuron = neuron };
+                Weights.Add(weight);
+            }
+        }
 
         public void Activate()
         {
@@ -70,7 +77,7 @@ namespace bballesteros.PNN
 
         private double SigmodiFunction()
         {
-            return 1 / (1 + Exp(-Gradient * (Input + Bias)));
+            return 1 / (1 + Exp(-Steepness * (Input + Bias)));
         }
 
         private double CalculatePartialDerivative()

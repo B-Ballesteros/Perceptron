@@ -11,9 +11,19 @@ namespace bballesteros.PNN
         public NeuralLayer() { }
 
         public NeuralLayer(int size)
-        { }
+        {
+            for (var i = 0; i < size; i++)
+            {
+                Add(new Neuron());
+            }
+        }
 
         public NeuralLayer(int size, NeuralLayer inputLayer)
-        { }
+        {
+            for(var i= 0; i < size; i++)
+            {
+                Add(new Neuron(inputLayer));
+            }
+        }
     }
 }
