@@ -8,14 +8,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Perceptron
+namespace bballesteros.PNN.Forms
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        NeuralNetwork network;
+
+        public MainForm()
         {
             InitializeComponent();
         }
 
+        private void CreateNetwork()
+        {
+            UpdateStatus("Creating network", true);
+            var createForm = new NewNetworkForm();
+            if (createForm.ShowDialog() == DialogResult.OK)
+            {
+                var structure = createForm.GetNetworkDimensions();
+                network = new NeuralNetwork(structure);
+                var message = $"Created network with {structure[0]} inputs, {structure.Length - 2} " +
+                    $"hidden layers and {structure[structure.Length - 1]} outputs";
+                UpdateStatus(message, false);
+            } else
+            {
+                UpdateStatus("Operation Canceled", false);
+            }
+        }
+
+        private void UpdateStatus(string message, bool animate)
+        {
+            statusProgressBar.Style = !animate ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous;
+            statusLabel.Text = message;
+        }
+
+        private void newButton_Click(object sender, EventArgs e)
+        {
+            
+            CreateNetwork();
+        }
     }
 }
