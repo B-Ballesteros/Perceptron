@@ -59,8 +59,10 @@
     <Compile Include="NewNetworkForm.Designer.cs">
       <DependentUpon>NewNetworkForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Patterns.cs" />
     <Compile Include="PNN\NeuralLayer.cs" />
     <Compile Include="PNN\NeuralNetwork.cs" />
+    <Compile Include="PNN\NeuralNetworkEventArgs.cs" />
     <Compile Include="PNN\Neuron.cs" />
     <Compile Include="Pattern.cs" />
     <Compile Include="Program.cs" />

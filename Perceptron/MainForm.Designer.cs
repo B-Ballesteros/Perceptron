@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -43,6 +43,10 @@
             this.errorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.newButton = new System.Windows.Forms.Button();
             this.configureButton = new System.Windows.Forms.Button();
+            this.fileTextBox = new System.Windows.Forms.TextBox();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.oFD = new System.Windows.Forms.OpenFileDialog();
+            this.TrainButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -135,17 +139,17 @@
             this.errorChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.errorChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Error";
-            this.errorChart.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.errorChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Error";
+            this.errorChart.Legends.Add(legend2);
             this.errorChart.Location = new System.Drawing.Point(5, 20);
             this.errorChart.Name = "errorChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Error";
-            series1.Name = "errorSeries";
-            this.errorChart.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Error";
+            series2.Name = "errorSeries";
+            this.errorChart.Series.Add(series2);
             this.errorChart.Size = new System.Drawing.Size(480, 275);
             this.errorChart.TabIndex = 0;
             this.errorChart.Text = "chart1";
@@ -161,7 +165,7 @@
             this.newButton.TabIndex = 5;
             this.newButton.Text = "Create";
             this.newButton.UseVisualStyleBackColor = true;
-            this.newButton.Click += new System.EventHandler(this.newButton_Click);
+            this.newButton.Click += new System.EventHandler(this.NewButton_Click);
             // 
             // configureButton
             // 
@@ -175,11 +179,51 @@
             this.configureButton.Text = "Configure";
             this.configureButton.UseVisualStyleBackColor = true;
             // 
+            // fileTextBox
+            // 
+            this.fileTextBox.Location = new System.Drawing.Point(12, 360);
+            this.fileTextBox.Name = "fileTextBox";
+            this.fileTextBox.ReadOnly = true;
+            this.fileTextBox.Size = new System.Drawing.Size(282, 22);
+            this.fileTextBox.TabIndex = 7;
+            // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(300, 360);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(75, 23);
+            this.searchButton.TabIndex = 8;
+            this.searchButton.Text = "...";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // oFD
+            // 
+            this.oFD.FileName = "openFileDialog1";
+            this.oFD.Filter = "CSV Files (*.csv)|*.csv";
+            this.oFD.InitialDirectory = "Documents";
+            // 
+            // TrainButton
+            // 
+            this.TrainButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.TrainButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.TrainButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TrainButton.Location = new System.Drawing.Point(45, 276);
+            this.TrainButton.Name = "TrainButton";
+            this.TrainButton.Size = new System.Drawing.Size(200, 50);
+            this.TrainButton.TabIndex = 9;
+            this.TrainButton.Text = "Train";
+            this.TrainButton.UseVisualStyleBackColor = true;
+            this.TrainButton.Click += new System.EventHandler(this.TrainButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(782, 553);
+            this.Controls.Add(this.TrainButton);
+            this.Controls.Add(this.searchButton);
+            this.Controls.Add(this.fileTextBox);
             this.Controls.Add(this.configureButton);
             this.Controls.Add(this.newButton);
             this.Controls.Add(this.groupBox2);
@@ -215,6 +259,10 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart errorChart;
         private System.Windows.Forms.Button newButton;
         private System.Windows.Forms.Button configureButton;
+        private System.Windows.Forms.TextBox fileTextBox;
+        private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.OpenFileDialog oFD;
+        private System.Windows.Forms.Button TrainButton;
     }
 }
 

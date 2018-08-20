@@ -12,6 +12,9 @@ namespace bballesteros.PNN
         public NeuralLayer Inputs { get { return this[0]; } }
         public NeuralLayer Outputs { get { return this[Count - 1]; } }
 
+        public delegate void ErrorValueChangedHandler(NeuralNetworkEventArgs e);
+        public event ErrorValueChangedHandler ErrorValueChanged;
+
         public NeuralNetwork() { }
         public NeuralNetwork(int[] structure)
         {
@@ -41,7 +44,8 @@ namespace bballesteros.PNN
             if(pattern.Inputs.Length != Inputs.Count)
             {
                 throw new ArgumentException(
-                    "Configuration mismatch.\n The number of pattern inputs must be equal to the number of the input neurons in the network");
+                    "Configuration mismatch." +
+                    "\n The number of pattern inputs must be equal to the number of the input neurons in the network");
             }
             for(var i = 0; i < Inputs.Count; i++)
             {
@@ -56,7 +60,7 @@ namespace bballesteros.PNN
             }
         }
 
-        public void Train(List<Pattern> patterns)
+        public void Train(Patterns patterns)
         {
             double totalError = 0;
             do
@@ -67,13 +71,23 @@ namespace bballesteros.PNN
                     Activate(pattern); //Forward Propagation
                     for (var i = 0; i < Outputs.Count; i++)
                     {
-                        var delta = -(pattern.Outputs[i] - Outputs[i].Output);
+                        var delta = pattern.Outputs[i] - Outputs[i].Output;
                         Outputs[i].AccumulateError(delta);
                         totalError += 0.5 * Pow(delta, 2);
                     }
                     AdjustWeights();
                 }
+                OnErrorValueChanged(totalError);
             } while (totalError > 0.01);
+        }
+
+        private void OnErrorValueChanged(double value)
+        {
+            if (ErrorValueChanged == null) return;
+
+            var eventArgs = new NeuralNetworkEventArgs(value);
+            ErrorValueChanged(eventArgs);
+            
         }
 
     }

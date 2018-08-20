@@ -35,5 +35,24 @@ namespace bballesteros.PNN
             Inputs = inputs ?? throw new ArgumentException("Inputs can't be null.");
             Outputs = outputs;
         }
+
+        public Pattern(string values, int inputCount, int outputCount)
+        {
+            var row = values.Split(',');
+            if(row.Length != inputCount + outputCount)
+            {
+                throw new Exception("Invalid PAttern configuration.");
+            }
+            Inputs = new double[inputCount];
+            Outputs = new double[outputCount];
+            for(var i = 0; i < inputCount; i++)
+            {
+                Inputs[i] = double.Parse(row[i]);
+            }
+            for(var i = 0;i < outputCount; i++)
+            {
+                Outputs[i] = double.Parse(row[i + inputCount]);
+            }
+        }
     }
 }

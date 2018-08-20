@@ -8,7 +8,7 @@ namespace bballesteros.PNN
 {
     class Weight
     {
-        public double Value { get; set; } = new Random().NextDouble() * 2 - 1; 
+        public double Value { get; set; } 
 
         public Neuron LinkedNeuron { get; set; }
     }

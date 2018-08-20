@@ -13,6 +13,9 @@ namespace bballesteros.PNN.Forms
     public partial class MainForm : Form
     {
         NeuralNetwork network;
+        Patterns patterns;
+
+        private delegate void UpdateLogHandler(TextBox textBox, string message);
 
         public MainForm()
         {
@@ -29,6 +32,7 @@ namespace bballesteros.PNN.Forms
                 network = new NeuralNetwork(structure);
                 var message = $"Created network with {structure[0]} inputs, {structure.Length - 2} " +
                     $"hidden layers and {structure[structure.Length - 1]} outputs";
+                network.ErrorValueChanged += ErrorValueChanged;
                 UpdateStatus(message, false);
             } else
             {
@@ -42,10 +46,52 @@ namespace bballesteros.PNN.Forms
             statusLabel.Text = message;
         }
 
-        private void newButton_Click(object sender, EventArgs e)
+
+        private void SelectPatternsFile()
+        {
+            if (oFD.ShowDialog() == DialogResult.OK)
+            {
+                fileTextBox.Text = oFD.FileName;
+                patterns = new Patterns(oFD.FileName, network?.Inputs?.Count ?? 0, network?.Outputs?.Count ?? 0);
+                logTextBox.Text += $"\n{patterns.Count} Patterns loaded.";
+            } else
+            {
+                fileTextBox.Text = string.Empty;
+            }
+        }
+
+        private void UpdateLog(TextBox textBox, string message)
+        {
+            textBox.Text += message;
+        }
+
+        private void trainNetwork()
+        {
+            network.Train(patterns);
+        }
+
+
+        private void NewButton_Click(object sender, EventArgs e)
         {
             
             CreateNetwork();
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            SelectPatternsFile();
+        }
+
+        private void ErrorValueChanged(NeuralNetworkEventArgs e)
+        {
+            var message = $"\n Current Error Value: {e.Value}";
+            System.Diagnostics.Debug.WriteLine(e.Value);
+            //logTextBox.BeginInvoke(new UpdateLogHandler(UpdateLog), message);
+        }
+
+        private void TrainButton_Click(object sender, EventArgs e)
+        {
+            trainNetwork();
         }
     }
 }

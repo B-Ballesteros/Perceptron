@@ -28,7 +28,7 @@ namespace bballesteros.PNN
         public double Error { get; set; }
         public double Input { get; set; }
         public double Steepness { get; set; } = 1;
-        public double LearningRatio = 0.01;
+        public double LearningRatio = 0.5;
         public List<Weight> Weights { get; set; }
 
         public Neuron() { }
@@ -36,9 +36,14 @@ namespace bballesteros.PNN
         public Neuron(NeuralLayer inputLayer)
         {
             Weights = new List<Weight>();
+            Random rnd = new Random();
             foreach(var neuron in inputLayer)
             {
-                var weight = new Weight { LinkedNeuron = neuron };
+                var weight = new Weight
+                {
+                    LinkedNeuron = neuron,
+                    Value = rnd.NextDouble() * 2 - 1
+                };
                 Weights.Add(weight);
             }
         }
@@ -47,9 +52,12 @@ namespace bballesteros.PNN
         {
             Error = 0;
             Input = 0;
-            foreach (var weight in Weights)
+            if (Weights != null)
             {
-                Input += weight.Value * weight.LinkedNeuron.Output;
+                foreach (var weight in Weights)
+                {
+                    Input += weight.Value * weight.LinkedNeuron.Output;
+                }
             }
         }
 
