@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using bballesteros.PNN.Utils;
 
 namespace bballesteros.PNN.Forms
 {
@@ -32,7 +33,7 @@ namespace bballesteros.PNN.Forms
                 network = new NeuralNetwork(structure);
                 var message = $"Created network with {structure[0]} inputs, {structure.Length - 2} " +
                     $"hidden layers and {structure[structure.Length - 1]} outputs";
-                network.ErrorValueChanged += ErrorValueChanged;
+                //network.ErrorValueChanged += ErrorValueChanged;
                 UpdateStatus(message, false);
             } else
             {
@@ -65,9 +66,16 @@ namespace bballesteros.PNN.Forms
             textBox.Text += message;
         }
 
-        private void trainNetwork()
+        private async Task<long> TrainNetworkAsync()
         {
-            network.Train(patterns);
+
+            var progress = new Progress<double>(error =>
+            {
+                errorChart.Series[0].Points.AddY(error);
+                errorChart.Update();
+            });
+            var result = await Task.Factory.StartNew(() => network.Train(patterns, progress), TaskCreationOptions.LongRunning);
+            return result.Result;
         }
 
 
@@ -84,14 +92,15 @@ namespace bballesteros.PNN.Forms
 
         private void ErrorValueChanged(NeuralNetworkEventArgs e)
         {
-            var message = $"\n Current Error Value: {e.Value}";
+            var message = $"\r\n Current Error Value: {e.Value}";
             System.Diagnostics.Debug.WriteLine(e.Value);
-            //logTextBox.BeginInvoke(new UpdateLogHandler(UpdateLog), message);
         }
 
-        private void TrainButton_Click(object sender, EventArgs e)
+        private async void TrainButton_Click(object sender, EventArgs e)
         {
-            trainNetwork();
+            logTextBox.Text += "\r\nTraining.";
+            var result = await TrainNetworkAsync();
+            statusLabel.Text = $"Training finished after {result} iterations.";
         }
     }
 }

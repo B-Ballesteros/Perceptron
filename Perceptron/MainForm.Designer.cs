@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -47,6 +46,7 @@
             this.searchButton = new System.Windows.Forms.Button();
             this.oFD = new System.Windows.Forms.OpenFileDialog();
             this.TrainButton = new System.Windows.Forms.Button();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -89,6 +89,7 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
+            this.toolStripStatusLabel1,
             this.statusProgressBar});
             this.statusStrip1.Location = new System.Drawing.Point(0, 528);
             this.statusStrip1.Name = "statusStrip1";
@@ -107,6 +108,7 @@
             // 
             // statusProgressBar
             // 
+            this.statusProgressBar.AutoSize = false;
             this.statusProgressBar.Name = "statusProgressBar";
             this.statusProgressBar.Size = new System.Drawing.Size(100, 19);
             this.statusProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -118,6 +120,7 @@
             this.logTextBox.Location = new System.Drawing.Point(0, 400);
             this.logTextBox.Multiline = true;
             this.logTextBox.Name = "logTextBox";
+            this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.logTextBox.Size = new System.Drawing.Size(780, 127);
             this.logTextBox.TabIndex = 2;
             // 
@@ -139,17 +142,16 @@
             this.errorChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.errorChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Error";
-            this.errorChart.Legends.Add(legend2);
+            chartArea6.Name = "ChartArea1";
+            this.errorChart.ChartAreas.Add(chartArea6);
             this.errorChart.Location = new System.Drawing.Point(5, 20);
             this.errorChart.Name = "errorChart";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Error";
-            series2.Name = "errorSeries";
-            this.errorChart.Series.Add(series2);
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Color = System.Drawing.Color.Red;
+            series6.Name = "errorSeries";
+            series6.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.errorChart.Series.Add(series6);
             this.errorChart.Size = new System.Drawing.Size(480, 275);
             this.errorChart.TabIndex = 0;
             this.errorChart.Text = "chart1";
@@ -216,6 +218,12 @@
             this.TrainButton.UseVisualStyleBackColor = true;
             this.TrainButton.Click += new System.EventHandler(this.TrainButton_Click);
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(13, 20);
+            this.toolStripStatusLabel1.Text = " ";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -263,6 +271,7 @@
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.OpenFileDialog oFD;
         private System.Windows.Forms.Button TrainButton;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

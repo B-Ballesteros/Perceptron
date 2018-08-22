@@ -60,11 +60,13 @@ namespace bballesteros.PNN
             }
         }
 
-        public void Train(Patterns patterns)
+        public Task<long> Train(Patterns patterns, IProgress<double> progress = null)
         {
             double totalError = 0;
+            long iterations = 0;
             do
             {
+                iterations++;
                 totalError = 0;
                 foreach(var pattern in patterns)
                 {
@@ -77,8 +79,9 @@ namespace bballesteros.PNN
                     }
                     AdjustWeights();
                 }
-                OnErrorValueChanged(totalError);
+                progress?.Report(totalError);
             } while (totalError > 0.01);
+            return Task.FromResult(iterations);
         }
 
         private void OnErrorValueChanged(double value)
